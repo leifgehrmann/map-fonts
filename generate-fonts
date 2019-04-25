@@ -1,0 +1,27 @@
+#!/bin/sh
+
+sketch_app_dir=`mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1`
+sketch_tool=$sketch_app_dir/Contents/Resources/sketchtool/bin/sketchtool
+
+# Export SVGs from Sketch
+$sketch_tool \
+  export slices \
+  "$1" \
+  --formats=svg \
+  --output="$2"
+
+# Convert strokes to paths
+svg-stroke-to-path SameStrokeColor 'stroke="#000"' "$2"/*.svg
+
+# Delete the "generated" font
+rm -f "$4"
+
+# From the "base" font, import SVGs and save as the "generated" font
+fontforge-svg-importer "$3" "$4" "$2"/*.svg
+
+# Export ttf from sfd
+fontforge -lang=py -c '\
+  import fontforge;\
+  font=fontforge.open(argv[1]);\
+  font.generate(argv[2])\
+' "$4" "$5"

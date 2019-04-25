@@ -2,9 +2,15 @@
 
 ![The original font that this repo is based on.](source.png)
 
-This repository contains fonts that mimic the style found on a variety of maps. For now, this includes fonts that are found on maps by [G. W. Bacon].
+This repository contains fonts that mimic the style found on a variety of maps.
+For now, this includes fonts that are found on maps by [G. W. Bacon].
 
-Fonts are designed in [Sketch], exported as SVG, then imported to [FontForge].
+Fonts are designed in [Sketch]. An automated script exports the slices as SVG,
+imports them to [FontForge], then exports as a TrueType font.
+
+[G. W. Bacon]: https://en.wikipedia.org/wiki/George_Washington_Bacon
+[Sketch]: https://www.sketch.com
+[FontForge]: https://fontforge.github.io
 
 ## GW Bacon Title (Regular)
 
@@ -12,10 +18,27 @@ Fonts are designed in [Sketch], exported as SVG, then imported to [FontForge].
 
 ## License
 
-Fonts are licensed under the [SIL Open Font License (OFL) version 1.1-update5][OFL].
+Fonts are licensed under the [SIL Open Font License version 1.1-update5][OFL].
 
-[G. W. Bacon]: https://en.wikipedia.org/wiki/George_Washington_Bacon
-[Sketch]: https://www.sketch.com
-[FontForge]: https://fontforge.github.io
 [OFL]: https://scripts.sil.org/cms/scripts/page.php?item_id=OFL-FAQ_web
-[CC-BY-NC-SA 4.0]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+
+## Build process
+
+### Dependencies
+
+1. Sketch
+2. FontForge
+2. [svg-stroke-to-path] (Which requires Inkscape)
+3. [fontforge-svg-importer][svg-importer]
+
+[svg-importer]: https://github.com/leifgehrmann/fontforge-svg-importer
+[svg-stroke-to-path]: https://github.com/leifgehrmann/svg-stroke-to-path
+
+### Building the fonts
+
+```
+make fonts
+```
+
+This will generate the `.ttf` file for each font. An `.sdf` file will also be
+created, in case the generated font needs to be tweaked.

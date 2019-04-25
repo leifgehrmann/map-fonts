@@ -1,8 +1,9 @@
 # Font artifacts
-*.ttf
 *.eot
 *.html
 *.svg
+
+*-generated.sfd
 
 # Mac OS
 .DS_Store
