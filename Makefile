@@ -1,3 +1,6 @@
+clean:
+	rm -rf GW\ Bacon\ Title/svg
+
 fonts: gw-bacon-title
 
 gw-bacon-title:
