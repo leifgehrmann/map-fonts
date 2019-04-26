@@ -1,0 +1,3 @@
+#!/bin/sh
+script_dir=$(cd `dirname $0` && pwd)
+fontforge -lang=py -script $script_dir/set-right-side-bearings.py "$@"

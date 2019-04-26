@@ -7,6 +7,9 @@ gw-bacon-title:
 		GW\ Bacon\ Title/GW\ Bacon\ Title\ Regular-base.sfd \
 		GW\ Bacon\ Title/GW\ Bacon\ Title\ Regular-generated.sfd \
 		GW\ Bacon\ Title/Version
+	scripts/set-right-side-bearings \
+		GW\ Bacon\ Title/GW\ Bacon\ Title\ Regular-generated.sfd \
+		200
 
 gw-bacon-title-ttf:
 	scripts/generate-ttf \
