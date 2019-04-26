@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Export ttf from sfd
+fontforge -lang=py -c '\
+  import fontforge;\
+  font=fontforge.open(argv[1]);\
+  font.generate(argv[2])\
+' "$1" "$2"

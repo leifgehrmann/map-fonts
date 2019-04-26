@@ -26,10 +26,3 @@ rm -f "$4"
 
 # From the "base" font, import SVGs and save as the "generated" font
 fontforge-svg-importer "$3" "$4" "$2"/*.svg
-
-# Export ttf from sfd
-fontforge -lang=py -c '\
-  import fontforge;\
-  font=fontforge.open(argv[1]);\
-  font.generate(argv[2])\
-' "$4" "$5"
