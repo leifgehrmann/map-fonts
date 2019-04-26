@@ -1,0 +1,45 @@
+#!/bin/sh
+
+sketch_file="$1"
+svg_dir="$2"
+sfd_base_file="$3"
+sfd_generated_file="$4"
+version_file="$5"
+
+sketch_app_dir=`mdfind kMDItemCFBundleIdentifier == 'com.bohemiancoding.sketch3' | head -n 1`
+sketch_tool=$sketch_app_dir/Contents/Resources/sketchtool/bin/sketchtool
+
+sketch_modified_at=`stat -f "%m" "$sketch_file"`
+svg_modified_at=0
+if [ -d "$svg_dir" ]; then
+  svg_modified_at=`stat -f "%m" "$svg_dir"/* | sort -rn | head -1 | cut -f2-`
+fi
+
+if [ "$sketch_modified_at" -gt "$svg_modified_at" ]; then
+  # Export SVGs from Sketch
+  $sketch_tool \
+    export slices \
+    "$sketch_file" \
+    --formats=svg \
+    --output="$svg_dir"
+
+  # Convert strokes to paths
+  svg-stroke-to-path SameStrokeColor 'stroke="#000"' "$svg_dir"/*.svg
+fi
+
+# Delete the "generated" font
+rm -f "$sfd_generated_file"
+
+# From the "base" font, import SVGs and save as the "generated" font
+fontforge-svg-importer "$sfd_base_file" "$sfd_generated_file" "$svg_dir"/*.svg
+
+# Read version from version file
+version=`cat "$version_file"`
+
+# Set version for sfd file
+fontforge -lang=py -c '\
+  import fontforge;\
+  font=fontforge.open(argv[1]);\
+  font.version = argv[2];\
+  font.save(argv[1])\
+' "$sfd_generated_file" "$version"
