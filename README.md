@@ -36,8 +36,12 @@ Fonts are licensed under the [SIL Open Font License version 1.1-update5][OFL].
 
 ### Building the fonts
 
+Because Sketch is required, the make script will only work on Mac OS.
+But other than that, building the font is really simple.
+Just clone this repository, and run:
+
 ```
-make fonts
+make
 ```
 
 This will generate the `.ttf` file for each font. An `.sdf` file will also be
